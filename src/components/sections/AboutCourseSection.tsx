@@ -22,7 +22,7 @@ function AboutCourseSection({ type, order_idx, name, values }: AboutCourseSectio
                 <summary className="py-4 cursor-pointer accordion-header">
                   <div className="max-w-[90%] font-medium md:text-base mx-lg:text-sm">
                     <h2>
-                      <b dangerouslySetInnerHTML={{ __html: item.title }}></b>
+                      {<b dangerouslySetInnerHTML={{ __html: item.title }}></b>}
                     </h2>
                   </div>
                 </summary>

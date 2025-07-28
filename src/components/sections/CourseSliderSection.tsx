@@ -18,7 +18,8 @@ const courseTabs: CourseTab[] = [
   { id: "layout", label: "How the course is laid out" },
   { id: "learn", label: "What you will learn by doing the course" },
   { id: "details", label: "Course details" },
-  { id: "exam", label: "Course Exam" },
+  { id: "feature_explanations", label: "Course Exclusive Feature" },
+  { id: "free_items", label: "Free items with this products" },
 ];
 
 // Map tab IDs to actual section types that exist in course data
@@ -27,7 +28,8 @@ const tabToSectionMap: { [key: string]: string } = {
   layout: "features",
   learn: "pointers",
   details: "about",
-  exam: "feature_explanations",
+  feature_explanations: "feature_explanations",
+  free_items: "free_items"
 };
 
 function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
