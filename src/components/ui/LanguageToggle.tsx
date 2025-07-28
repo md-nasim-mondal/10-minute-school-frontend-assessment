@@ -24,7 +24,7 @@ function LanguageToggleContent() {
       className='px-3 py-1 text-sm border rounded hover:bg-gray-100 transition-colors flex items-center gap-2'
       aria-label={`Switch to ${language === "en" ? "Bengali" : "English"}`}>
       <span className='text-xs'>🌐</span>
-      {language === "en" ? "বাংলা" : "English"}
+      {language === "en" ? "বাং" : "EN"}
     </button>
   );
 }

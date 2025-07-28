@@ -101,7 +101,7 @@ function renderSection(section: ISection) {
     case "testimonials":
       return (
         <div id={section.type} key={section.type}>
-          <StudentsOpinionSection testimonialData={section as any} />
+          <StudentsOpinionSection {...section} />
         </div>
       );
     case "requirements":

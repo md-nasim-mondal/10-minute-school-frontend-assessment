@@ -1,6 +1,9 @@
+"use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { LeftArrowSvg1, RightArrowSvg1 } from '@/assets/icons';
+import { useLanguage } from "@/providers/LanguageProvider";
+import { ISection } from "@/types";
 
 interface TestimonialValue {
   description: string;
@@ -13,26 +16,76 @@ interface TestimonialValue {
   video_url: string;
 }
 
-interface TestimonialData {
-  type: string;
-  name: string;
-  description: string;
-  bg_color: string;
-  order_idx: number;
-  values: TestimonialValue[];
+interface StudentsOpinionSectionProps extends Partial<ISection> {
+  className?: string;
 }
 
-interface StudentsOpinionSectionProps {
-  testimonialData: TestimonialData;
-}
-
-const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimonialData }) => {
+const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ 
+  name,
+  type,
+  order_idx,
+  values = [],
+  className = "" 
+}) => {
+  const { language } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playingVideos, setPlayingVideos] = useState<{[key: string]: boolean}>({});
   const [expandedTestimonials, setExpandedTestimonials] = useState<{[key: string]: boolean}>({});
+  
+  // Default section name based on language if not provided
+  const sectionName = name || (language === 'bn' ? 'শিক্ষার্থীদের মতামত' : 'Students Opinion');
+  
+  // Convert section values to testimonial items
+  const testimonialValues: TestimonialValue[] = values.map((item: any) => ({
+    description: item.description || '',
+    id: item.id,
+    name: item.name || '',
+    profile_image: item.profile_image || '',
+    testimonial: item.testimonial || '',
+    thumb: item.thumb || '',
+    video_type: item.video_type || '',
+    video_url: item.video_url || ''
+  }));
+  
+  // Fallback testimonial data if no values provided
+  const fallbackTestimonials: TestimonialValue[] = [
+    {
+      id: "1",
+      name: language === 'bn' ? "রহিম উদ্দিন" : "Rahim Uddin",
+      description: language === 'bn' ? "IELTS প্রস্তুতিকারী" : "IELTS Candidate",
+      testimonial: language === 'bn' 
+        ? "এই কোর্সটি আমার IELTS প্রস্তুতিতে অনেক সাহায্য করেছে। শিক্ষকদের পড়ানোর পদ্ধতি খুবই কার্যকর এবং বোধগম্য।"
+        : "This course has helped me a lot in my IELTS preparation. The teaching method of the instructors is very effective and understandable.",
+      profile_image: "",
+      thumb: "",
+      video_type: "",
+      video_url: ""
+    },
+    {
+      id: "2",
+      name: language === 'bn' ? "ফাতিমা খাতুন" : "Fatima Khatun",
+      description: language === 'bn' ? "IELTS প্রস্তুতিকারী" : "IELTS Candidate",
+      testimonial: language === 'bn'
+        ? "অনলাইন ক্লাসগুলো খুবই ভালো। যেকোনো সময় দেখতে পারি এবং বার বার প্র্যাকটিস করতে পারি।"
+        : "The online classes are very good. I can watch them anytime and practice repeatedly.",
+      profile_image: "",
+      thumb: "",
+      video_type: "",
+      video_url: ""
+    }
+  ];
+  
+  const displayData = testimonialValues.length > 0 ? testimonialValues : fallbackTestimonials;
+  
   const itemsPerPage = 2;
-  const totalPages = Math.ceil(testimonialData.values.length / itemsPerPage);
+  const totalPages = Math.ceil(displayData.length / itemsPerPage);
   const CHARACTER_LIMIT = 150; // Character limit for testimonial text
+
+  // Language-based text
+  const expandText = language === 'bn' ? 'আরও দেখুন ▼' : 'See more ▼';
+  const collapseText = language === 'bn' ? 'সংক্ষিপ্ত করুন ▲' : 'See less ▲';
+  const prevAriaLabel = language === 'bn' ? 'পূর্ববর্তী স্লাইড' : 'Previous slide';
+  const nextAriaLabel = language === 'bn' ? 'পরবর্তী স্লাইড' : 'Next slide';
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % totalPages);
@@ -52,7 +105,7 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
 
   const getCurrentItems = () => {
     const startIndex = currentIndex * itemsPerPage;
-    return testimonialData.values.slice(startIndex, startIndex + itemsPerPage);
+    return displayData.slice(startIndex, startIndex + itemsPerPage);
   };
 
   const getYouTubeEmbedUrl = (videoUrl: string) => {
@@ -80,9 +133,9 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8">
+    <div id={type} style={{ order: order_idx }} className={`w-full max-w-6xl mx-auto px-4 py-8 ${className}`}>
       <h2 className="text-2xl font-semibold text-gray-900 mb-8">
-        {testimonialData.name}
+        {sectionName}
       </h2>
       
       <div className="relative">
@@ -94,7 +147,7 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
               ? "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
               : "bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
           }`}
-          aria-label='Previous slide'
+          aria-label={prevAriaLabel}
           disabled={currentIndex === 0}
         >
           <LeftArrowSvg1/>
@@ -106,9 +159,8 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
             currentIndex === totalPages - 1
               ? "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
               : "bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
-          }`
-        }
-        aria-label='Next slide'
+          }`}
+          aria-label={nextAriaLabel}
           disabled={currentIndex === totalPages - 1}
         >
           <RightArrowSvg1/>
@@ -197,7 +249,7 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
                             onClick={() => toggleTestimonialExpansion(testimonial.id)}
                             className="text-green-600 text-sm hover:text-green-700 transition-colors self-start"
                           >
-                            {isExpanded ? 'আরও দেখুন ▲' : 'আরও দেখুন ▼'}
+                            {isExpanded ? collapseText : expandText}
                           </button>
                         )}
                       </div>

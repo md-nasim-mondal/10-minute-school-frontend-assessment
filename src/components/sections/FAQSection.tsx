@@ -97,7 +97,7 @@ const FAQSection = ({
   const seeLessText = language === 'bn' ? 'কম দেখুন' : 'See less';
 
   return (
-    <div id={type} style={{ order: order_idx }} className={`w-full max-w-4xl mx-auto p-4 ${className}`}>
+    <div id={type} style={{ order: order_idx }} className={`w-full max-w-4xl mx-auto p-4 ${className} relative`}>
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">
         {sectionName}
       </h2>
@@ -140,22 +140,7 @@ const FAQSection = ({
       
       {displayData.length > 4 && (
         <div className="text-center mt-6">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center justify-center mx-auto transition-colors duration-200"
-          >
-            {showAll ? seeLessText : seeAllText}
-            <svg 
-              className={`w-4 h-4 ml-1 transition-transform duration-200 ${
-                showAll ? 'rotate-180' : ''
-              }`}
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+         <button onClick={() => setShowAll(!showAll)} className="absolute bottom-6 left-1/2 flex translate-x-[-50%] items-center gap-2 rounded-full bg-white px-4 py-1 text-sm text-gray-500 shadow-[0px_0px_17.0361px_#E7EAF7] hover:bg-gray-50 hover:text-gray-700">{showAll ? seeLessText : seeAllText}<svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
         </div>
       )}
     </div>
