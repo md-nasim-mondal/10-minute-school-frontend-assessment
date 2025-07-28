@@ -1,16 +1,41 @@
 "use client";
 import React from "react";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { ISection } from "@/types";
 
-const CourseDetailsSection = () => {
-  const courseDetails = [
-    "ইন্টারেক্টিভ সংযোগ (ওয়াইফাইং বা মোবাইল ইন্টারনেট)",
-    "স্মার্টফোন অথবা পিসি",
-  ];
+interface CourseDetailsSectionProps extends Partial<ISection> {
+  className?: string;
+}
+
+const CourseDetailsSection = ({ 
+  name,
+  type,
+  order_idx,
+  className = "" 
+}: CourseDetailsSectionProps) => {
+  const { t, language } = useLanguage();
+
+  // Default section name based on language if not provided
+  const sectionName = name || (language === 'bn' ? 'কোর্সের বিস্তারিত' : 'Course Details');
+
+  // Course details content based on language
+  const courseDetailsContent = {
+    bn: [
+      "ইন্টারেক্টিভ সংযোগ (ওয়াইফাইং বা মোবাইল ইন্টারনেট)",
+      "স্মার্টফোন অথবা পিসি",
+    ],
+    en: [
+      "Interactive connection (WiFi or mobile internet)",
+      "Smartphone or PC",
+    ]
+  };
+
+  const courseDetails = courseDetailsContent[language] || courseDetailsContent.en;
 
   return (
-    <div className='w-full max-w-4xl mx-auto px-4 py-6'>
+    <div id={type} style={{ order: order_idx }} className={`w-full max-w-4xl mx-auto px-4 py-6 ${className}`}>
       <h2 className='text-xl font-semibold text-gray-900 mb-4'>
-        Course details
+        {sectionName}
       </h2>
 
       <div className='bg-gray-50 border border-gray-200 rounded-lg p-4'>

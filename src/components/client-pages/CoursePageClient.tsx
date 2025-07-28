@@ -41,7 +41,7 @@ const SUPPORTED_SECTION_TYPES = [
   "testimonials",
   "requirements",
   "how_to_pay",
-  "faq"
+  "faq",
 ];
 
 // Type-safe section renderer function
@@ -107,13 +107,13 @@ function renderSection(section: ISection) {
     case "requirements":
       return (
         <div id={section.type} key={section.type}>
-          <CourseDetailsSection />
+          <CourseDetailsSection {...section} />
         </div>
       );
     case "how_to_pay":
       return (
         <div id={section.type} key={section.type}>
-          <PaymentProcessSection />
+          <PaymentProcessSection {...section} />
         </div>
       );
     case "faq":
