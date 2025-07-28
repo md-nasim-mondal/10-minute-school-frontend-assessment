@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { getCourseDetailsData } from '@/actions/course-actions'
-import CoursePageClient from '@/components/client-pages/course-page-client'
+import CoursePageClient from '@/components/client-pages/CoursePageClient'
 import { ICourseData } from '@/types'
 import { Metadata } from 'next'
 

@@ -2,6 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { LeftArrowSvg1, RightArrowSvg1 } from "@/assets/icons";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { ISection } from "@/types";
 
 interface CourseTab {
   id: string;
@@ -11,9 +13,11 @@ interface CourseTab {
 
 interface CourseSliderSectionProps {
   className?: string;
+  sections?: ISection[];
 }
 
-const courseTabs: CourseTab[] = [
+// Default tabs for fallback
+const defaultCourseTabs: CourseTab[] = [
   { id: "instructor", label: "Course instructor" },
   { id: "layout", label: "How the course is laid out" },
   { id: "learn", label: "What you will learn by doing the course" },
@@ -32,9 +36,27 @@ const tabToSectionMap: { [key: string]: string } = {
   feature_explanations: "feature_explanations",
   free_items: "free_items",
   faq: "faq",
+  testimonials: "testimonials",
+  requirements: "requirements",
+  how_to_pay: "how_to_pay",
 };
 
-function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
+// Translation keys for section labels
+const sectionLabelKeys: { [key: string]: string } = {
+  instructors: "course.instructor",
+  features: "feature.explanations",
+  pointers: "course.pointers",
+  about: "course.about",
+  feature_explanations: "course.features",
+  free_items: "free.items",
+  faq: "faq",
+  testimonials: "testimonials",
+  requirements: "course.details",
+  how_to_pay: "payment.process",
+};
+
+function CourseSliderSection({ className = "", sections = [] }: CourseSliderSectionProps) {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewIndex, setViewIndex] = useState(0);
@@ -42,6 +64,20 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
   const [isRightDisabled, setIsRightDisabled] = useState(false);
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  // Generate course tabs from sections data or use default
+  // Only include sections that have a name property
+  const courseTabs: CourseTab[] = sections.length > 0 
+    ? sections
+        .filter((section) => section.name && section.name.trim() !== "") // Only sections with name
+        .map((section) => ({
+          id: section.type,
+          label: section.name, // Use the section name directly as label
+        }))
+    : defaultCourseTabs.map((tab) => ({
+        ...tab,
+        label: sectionLabelKeys[tabToSectionMap[tab.id]] ? t(sectionLabelKeys[tabToSectionMap[tab.id]]) : tab.label,
+      }));
 
   // Check scroll position and update disabled states
   const checkScrollPosition = () => {
@@ -93,8 +129,9 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
     setCurrentIndex(index);
     setViewIndex(index);
 
-    // Map tab ID to actual section type and scroll to it
-    const sectionType = tabToSectionMap[tabId];
+    // Use the section type directly or map it for backward compatibility
+    const sectionType = sections.length > 0 ? tabId : (tabToSectionMap[tabId] || tabId);
+    
     if (sectionType) {
       const targetSection = document.getElementById(sectionType);
       if (targetSection) {
@@ -128,6 +165,11 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
   const handleScroll = () => {
     checkScrollPosition();
   };
+
+  // Don't render if no tabs available
+  if (courseTabs.length === 0) {
+    return null;
+  }
 
   return (
     <div className={`course-slider-section bg-white ${className}`}>

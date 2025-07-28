@@ -21,21 +21,35 @@ import { useLanguage } from "@/providers/LanguageProvider";
 import CourseSliderSection from "@/components/sections/CourseSliderSection";
 import FreeItemsSection from "@/components/sections/FreeItemsSection";
 import FAQSection from "@/components/sections/FAQSection";
-import PaymentProcessSection from "../sections/PaymentProcessSection";
-import CourseDetailsSection from "../sections/CourseDetailsSection";
-import StudentsOpinionSection from "../sections/StudentsOpinionSection";
+import PaymentProcessSection from "@/components/sections/PaymentProcessSection";
+import CourseDetailsSection from "@/components/sections/CourseDetailsSection";
+import StudentsOpinionSection from "@/components/sections/StudentsOpinionSection";
 
 interface IProps {
   initialData: ICourseData | null;
   lang: string;
 }
 
+// Define supported section types that have cases in renderSection
+const SUPPORTED_SECTION_TYPES = [
+  "instructors",
+  "features",
+  "pointers",
+  "about",
+  "feature_explanations",
+  "free_items",
+  "testimonials",
+  "requirements",
+  "how_to_pay",
+  "faq"
+];
+
 // Type-safe section renderer function
 function renderSection(section: ISection) {
   switch (section.type) {
     case "instructors":
       return (
-        <div id='instructors' key={section.type}>
+        <div id={section.type} key={section.type}>
           <CourseInstructorSection
             {...section}
             values={section.values as IInstructorValue[]}
@@ -44,7 +58,7 @@ function renderSection(section: ISection) {
       );
     case "features":
       return (
-        <div id='features' key={section.type}>
+        <div id={section.type} key={section.type}>
           <FeaturesSection
             {...section}
             values={section.values as IFeatureValue[]}
@@ -53,7 +67,7 @@ function renderSection(section: ISection) {
       );
     case "pointers":
       return (
-        <div id='pointers' key={section.type}>
+        <div id={section.type} key={section.type}>
           <PointersSection
             {...section}
             values={section.values as IPointerValue[]}
@@ -62,7 +76,7 @@ function renderSection(section: ISection) {
       );
     case "about":
       return (
-        <div id='about' key={section.type}>
+        <div id={section.type} key={section.type}>
           <AboutCourseSection
             {...section}
             values={section.values as IAboutValue[]}
@@ -71,7 +85,7 @@ function renderSection(section: ISection) {
       );
     case "feature_explanations":
       return (
-        <div id='feature_explanations' key={section.type}>
+        <div id={section.type} key={section.type}>
           <FeatureExplanationsSection
             {...section}
             values={section.values as IFeatureExplanationValue[]}
@@ -80,40 +94,34 @@ function renderSection(section: ISection) {
       );
     case "free_items":
       return (
-        <div id='free_items' key={section.type}>
-          <FreeItemsSection
-          />
+        <div id={section.type} key={section.type}>
+          <FreeItemsSection />
         </div>
-      )
+      );
     case "testimonials":
       return (
-        <div id='testimonials' key={section.type}>
-          <StudentsOpinionSection
-          testimonialData={section as any}
-          />
+        <div id={section.type} key={section.type}>
+          <StudentsOpinionSection testimonialData={section as any} />
         </div>
-      )
+      );
     case "requirements":
       return (
-        <div id='requirements' key={section.type}>
-          <CourseDetailsSection
-          />
+        <div id={section.type} key={section.type}>
+          <CourseDetailsSection />
         </div>
-      )
+      );
     case "how_to_pay":
       return (
-        <div id='how_to_pay' key={section.type}>
-          <PaymentProcessSection
-          />
+        <div id={section.type} key={section.type}>
+          <PaymentProcessSection />
         </div>
-      )
+      );
     case "faq":
       return (
-        <div id='faq' key={section.type}>
-          <FAQSection
-          />
+        <div id={section.type} key={section.type}>
+          <FAQSection />
         </div>
-      )
+      );
     default:
       return null;
   }
@@ -161,8 +169,12 @@ export default function CoursePageClient({ initialData, lang }: IProps) {
 
   const courseData: ICourseData = data || initialData!;
 
-  console.log(courseData)
+  // Filter sections to only include supported types for CourseSliderSection
+  const supportedSections = courseData.sections.filter((section) =>
+    SUPPORTED_SECTION_TYPES.includes(section.type)
+  );
 
+  console.log(courseData);
 
   return (
     <div>
@@ -176,8 +188,8 @@ export default function CoursePageClient({ initialData, lang }: IProps) {
 
       <main className='max-w-[1200px] mx-auto p-4 flex flex-col gap-4 md:flex-row md:gap-12'>
         <section className='order-2 flex-1 md:order-1 md:max-w-[calc(100%_-_348px)] lg:max-w-[calc(100%_-_448px)]'>
-          <div className="sticky top-16 z-30">
-            <CourseSliderSection />
+          <div className='sticky top-16 z-30'>
+            <CourseSliderSection sections={supportedSections} />
           </div>
           {courseData.sections
             .map((section: ISection) => renderSection(section))

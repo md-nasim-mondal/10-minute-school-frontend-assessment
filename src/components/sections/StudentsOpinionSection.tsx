@@ -121,7 +121,7 @@ const StudentsOpinionSection: React.FC<StudentsOpinionSectionProps> = ({ testimo
             const shouldShowExpandButton = testimonial.testimonial && testimonial.testimonial.length > CHARACTER_LIMIT;
             
             return (
-              <div key={testimonial.id} className="flex-1 bg-white border border-gray-200 rounded-lg shadow-sm md:max-w-[48%]">
+              <div key={testimonial.id} className="flex-1 bg-white border border-gray-200 rounded-lg shadow-sm md:max-w-[49%]">
                 {/* Quote Icon */}
                <div className="relative -top-4 left-5 flex h-[38px] w-[38px] flex-row items-center justify-center rounded-full bg-[#FCE0D6] p-2 z-20" id="quote">
                  <div>
