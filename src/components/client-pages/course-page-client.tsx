@@ -21,6 +21,8 @@ import { useLanguage } from "@/providers/LanguageProvider";
 import CourseSliderSection from "@/components/sections/CourseSliderSection";
 import FreeItemsSection from "@/components/sections/FreeItemsSection";
 import FAQSection from "@/components/sections/FAQSection";
+import PaymentProcessSection from "../sections/PaymentProcessSection";
+import CourseDetailsSection from "../sections/CourseDetailsSection";
 
 interface IProps {
   initialData: ICourseData | null;
@@ -82,6 +84,20 @@ function renderSection(section: ISection) {
           />
         </div>
       )
+    case "requirements":
+      return (
+        <div id='requirements' key={section.type}>
+          <CourseDetailsSection
+          />
+        </div>
+      )
+    case "how_to_pay":
+      return (
+        <div id='how_to_pay' key={section.type}>
+          <PaymentProcessSection
+          />
+        </div>
+      )
     case "faq":
       return (
         <div id='faq' key={section.type}>
@@ -136,9 +152,8 @@ export default function CoursePageClient({ initialData, lang }: IProps) {
 
   const courseData: ICourseData = data || initialData!;
 
-  console.log(courseData.sections)
+  console.log(courseData)
 
-  console.log(courseData.sections.length)
 
   return (
     <div>
