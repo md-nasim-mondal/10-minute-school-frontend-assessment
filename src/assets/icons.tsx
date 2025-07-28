@@ -143,6 +143,48 @@ export function RightArrowSvg() {
   );
 }
 
+export function LeftArrowSvg1() {
+  return (
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  width="33" 
+  height="32" 
+  fill="none" 
+  viewBox="0 0 33 32" 
+  className="rotate-180 xl:ml-[-40px]"
+>
+  <path 
+    fill="#000" 
+    fillOpacity="0.5" 
+    fillRule="evenodd" 
+    d="M16.757 32c8.836 0 16-7.163 16-16s-7.164-16-16-16c-8.837 0-16 7.163-16 16s7.163 16 16 16zM15.064 8.893a1 1 0 00-1.415 1.415L19.342 16l-5.693 5.692a1 1 0 001.415 1.415l6.4-6.4a1 1 0 000-1.414l-6.4-6.4z" 
+    clipRule="evenodd"
+  />
+</svg>
+  );
+}
+
+export function RightArrowSvg1() {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="33" 
+      height="32" 
+      fill="none" 
+      viewBox="0 0 33 32" 
+      className="xl:mr-[-40px]"
+    >
+      <path 
+        fill="#000" 
+        fillOpacity="0.5" 
+        fillRule="evenodd" 
+        d="M16.757 32c8.836 0 16-7.163 16-16s-7.164-16-16-16c-8.837 0-16 7.163-16 16s7.163 16 16 16zM15.064 8.893a1 1 0 00-1.415 1.415L19.342 16l-5.693 5.692a1 1 0 001.415 1.415l6.4-6.4a1 1 0 000-1.414l-6.4-6.4z" 
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
 export function LanguageToggleIcon() {
   return (
     <svg
