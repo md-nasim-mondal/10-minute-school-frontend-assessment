@@ -1,10 +1,10 @@
 import { LeftArrow2 } from "@/assets/icons";
-import { InstructorValue, Section } from "@/types";
+import { IInstructorValue, ISection } from "@/types";
 import Image from "next/image";
 import React from "react";
 
-interface CourseInstructorSectionProps extends Section {
-  values: InstructorValue[];
+interface CourseInstructorSectionProps extends ISection {
+  values: IInstructorValue[];
 }
 
 function CourseInstructorSection({

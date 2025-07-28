@@ -2,8 +2,9 @@
 
 import { useLanguage } from "@/providers/LanguageProvider";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function LanguageToggle() {
+function LanguageToggleContent() {
   const { language, setLanguage } = useLanguage();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,5 +26,21 @@ export default function LanguageToggle() {
       <span className='text-xs'>🌐</span>
       {language === "en" ? "বাংলা" : "English"}
     </button>
+  );
+}
+
+export default function LanguageToggle() {
+  return (
+    <Suspense fallback={
+      <button 
+        className='px-3 py-1 text-sm border rounded bg-gray-100 transition-colors flex items-center gap-2'
+        disabled
+      >
+        <span className='text-xs'>🌐</span>
+        Loading...
+      </button>
+    }>
+      <LanguageToggleContent />
+    </Suspense>
   );
 }
