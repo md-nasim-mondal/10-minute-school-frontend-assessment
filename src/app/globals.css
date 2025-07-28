@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-green: #1cab55;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --default-border-color: #dbe1eb;
+  }
+  * {
+    border-color: var(--default-border-color);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accordion-header::after {
+  content: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0nMTInIGhlaWdodD0nOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMi4xMiA2LjcxIDYgMi44M2wzLjg4IDMuODhhLjk5Ny45OTcgMCAxIDAgMS40MS0xLjQxTDYuNy43MWEuOTk2Ljk5NiAwIDAgMC0xLjQxIDBMLjcgNS4zYS45OTYuOTk2IDAgMCAwIDAgMS40MWMuMzkuMzggMS4wMy4zOSAxLjQyIDBaJyBmaWxsPScjMDAwJy8+PC9zdmc+");
+  font-size: 1.5em;
+  transform: rotate(180deg);
+  opacity: 0.6;
+  transition: transform 0.2s ease;
+}
+
+details[open] .accordion-header::after {
+  transform: rotate(0deg);
+}
+
+.hideScrollbar {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+
+.hideScrollbar::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }

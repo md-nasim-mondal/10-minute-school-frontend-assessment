@@ -1,26 +1,26 @@
-interface ErrorItem {
+interface IErrorItem {
   code?: string;
   message?: string;
 }
 
-interface PayloadItem {
+interface IPayloadItem {
   id?: string;
   value?: string;
 }
 
-interface SecondaryCtaItem {
+interface ISecondaryCtaItem {
   name?: string;
   value?: string;
 }
 
-export interface Media {
+export interface IMedia {
   name: string;
   resource_type: string;
   resource_value: string;
   thumbnail_url?: string;
 }
 
-interface Checklist {
+interface IChecklist {
   color: string;
   icon: string;
   id: string;
@@ -28,33 +28,34 @@ interface Checklist {
   text: string;
 }
 
-interface Seo {
-  defaultMeta: Meta[];
-  description: string;
-  keywords: string[];
-  schema: Schema[];
-  title: string;
-}
-
-interface Meta {
+interface IMeta {
   content: string;
   type: string;
   value: string;
 }
 
-interface Schema {
+interface ISchema {
   meta_name: string;
   meta_value: string;
   type: string;
 }
 
-export type AboutValue = {
+interface ISeo {
+  defaultMeta: IMeta[];
+  description: string;
+  keywords: string[];
+  schema: ISchema[];
+  title: string;
+}
+
+export type IAboutValue = {
   description: string;
   icon: string;
   id: string;
   title: string;
 };
-export type FeatureExplanationValue = {
+
+export type IFeatureExplanationValue = {
   checklist: string[];
   file_type: string;
   file_url: string;
@@ -62,20 +63,22 @@ export type FeatureExplanationValue = {
   title: string;
   video_thumbnail: string;
 };
-export type FeatureValue = {
+
+export type IFeatureValue = {
   icon: string;
   id: string;
   subtitle: string;
   title: string;
 };
-export type PointerValue = {
+
+export type IPointerValue = {
   color: string;
   icon: string;
   id: string;
   text: string;
 };
 
-export type InstructorValue = {
+export type IInstructorValue = {
   description: string;
   has_instructor_page: boolean;
   image: string;
@@ -84,22 +87,21 @@ export type InstructorValue = {
   slug: string;
 };
 
-export interface Section {
+export interface ISection {
   type: string;
   name: string;
   description: string;
   bg_color: string;
   order_idx: number;
   values:
-    | AboutValue[]
-    | PointerValue[]
-    | PointerValue[]
-    | FeatureValue[]
-    | InstructorValue[]
-    | FeatureExplanationValue[];
+    | IAboutValue[]
+    | IPointerValue[]
+    | IFeatureValue[]
+    | IInstructorValue[]
+    | IFeatureExplanationValue[];
 }
 
-export interface CourseData {
+export interface ICourseData {
   slug: string;
   id: number;
   title: string;
@@ -115,24 +117,33 @@ export interface CourseData {
     slug: string;
   };
   start_at: string;
-  media: Media[];
-  checklist: Checklist[];
-  seo: Seo;
+  media: IMedia[];
+  checklist: IChecklist[];
+  seo: ISeo;
   cta_text: {
     name: string;
     value: string;
   };
-  sections: Section[];
+  sections: ISection[];
   is_cohort_based_course: boolean;
-  secondary_cta_group: SecondaryCtaItem[];
+  secondary_cta_group: ISecondaryCtaItem[];
   delivery_method: string;
 }
 
-export interface CourseResponse {
+export interface ICourseResponse {
   code: number;
-  data: CourseData;
-  error: ErrorItem[];
+  data: ICourseData;
+  error: IErrorItem[];
   message: string;
-  payload: PayloadItem[];
+  payload: IPayloadItem[];
   status_code: number;
+}
+
+// Language types
+export type ILanguage = "en" | "bn";
+
+export interface ILanguageContextType {
+  language: ILanguage;
+  setLanguage: (lang: ILanguage) => void;
+  t: (key: string) => string;
 }
