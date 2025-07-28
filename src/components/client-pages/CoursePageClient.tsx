@@ -117,11 +117,7 @@ function renderSection(section: ISection) {
         </div>
       );
     case "faq":
-      return (
-        <div id={section.type} key={section.type}>
-          <FAQSection />
-        </div>
-      );
+      return <FAQSection key={section.type} {...section} />;
     default:
       return null;
   }
