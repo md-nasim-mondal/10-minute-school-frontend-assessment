@@ -141,7 +141,7 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
               ? "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
               : "bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
           }`}
-          aria-label='Previous tab'>
+          aria-label='Previous View'>
           <LeftArrowSvg1 />
         </button>
 
@@ -154,7 +154,7 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
               ? "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
               : "bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
           }`}
-          aria-label='Next tab'>
+          aria-label='Next View'>
           <RightArrowSvg1 />
         </button>
 

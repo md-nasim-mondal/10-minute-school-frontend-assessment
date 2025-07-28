@@ -23,6 +23,7 @@ import FreeItemsSection from "@/components/sections/FreeItemsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import PaymentProcessSection from "../sections/PaymentProcessSection";
 import CourseDetailsSection from "../sections/CourseDetailsSection";
+import StudentsOpinionSection from "../sections/StudentsOpinionSection";
 
 interface IProps {
   initialData: ICourseData | null;
@@ -81,6 +82,14 @@ function renderSection(section: ISection) {
       return (
         <div id='free_items' key={section.type}>
           <FreeItemsSection
+          />
+        </div>
+      )
+    case "testimonials":
+      return (
+        <div id='testimonials' key={section.type}>
+          <StudentsOpinionSection
+          testimonialData={section as any}
           />
         </div>
       )
