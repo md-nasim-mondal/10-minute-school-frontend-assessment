@@ -18,8 +18,9 @@ import FeaturesSection from "@/components/sections/FeaturesSection";
 import PointersSection from "@/components/sections/PointersSection";
 import StickyChecklistSection from "@/components/sections/StickyChecklistSection";
 import { useLanguage } from "@/providers/LanguageProvider";
-import CourseSliderSection from "../sections/CourseSliderSection";
-import FreeItemsSection from "../sections/FreeItemsSection";
+import CourseSliderSection from "@/components/sections/CourseSliderSection";
+import FreeItemsSection from "@/components/sections/FreeItemsSection";
+import FAQSection from "@/components/sections/FAQSection";
 
 interface IProps {
   initialData: ICourseData | null;
@@ -81,6 +82,13 @@ function renderSection(section: ISection) {
           />
         </div>
       )
+    case "faq":
+      return (
+        <div id='faq' key={section.type}>
+          <FAQSection
+          />
+        </div>
+      )
     default:
       return null;
   }
@@ -127,6 +135,8 @@ export default function CoursePageClient({ initialData, lang }: IProps) {
   }
 
   const courseData: ICourseData = data || initialData!;
+
+  console.log(courseData.sections)
 
   console.log(courseData.sections.length)
 

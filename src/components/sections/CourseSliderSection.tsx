@@ -20,6 +20,7 @@ const courseTabs: CourseTab[] = [
   { id: "details", label: "Course details" },
   { id: "feature_explanations", label: "Course Exclusive Feature" },
   { id: "free_items", label: "Free items with this products" },
+  { id: "faq", label: "Frequently Ask Questions" },
 ];
 
 // Map tab IDs to actual section types that exist in course data
@@ -29,7 +30,8 @@ const tabToSectionMap: { [key: string]: string } = {
   learn: "pointers",
   details: "about",
   feature_explanations: "feature_explanations",
-  free_items: "free_items"
+  free_items: "free_items",
+  faq: "faq",
 };
 
 function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
@@ -47,10 +49,10 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
       const container = tabContainerRef.current;
       const scrollLeft = container.scrollLeft;
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
-      
+
       // Left button disabled when at start
       setIsLeftDisabled(scrollLeft <= 0);
-      
+
       // Right button disabled when at end
       setIsRightDisabled(scrollLeft >= maxScrollLeft - 1); // -1 for precision
     }
@@ -77,7 +79,7 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
           left: scrollLeft,
           behavior: "smooth",
         });
-        
+
         // Check scroll position after scrolling
         setTimeout(() => {
           checkScrollPosition();
@@ -96,7 +98,7 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
     if (sectionType) {
       const targetSection = document.getElementById(sectionType);
       if (targetSection) {
-        const yOffset = -80;
+        const yOffset = -120;
         const y =
           targetSection.getBoundingClientRect().top +
           window.pageYOffset +
@@ -112,13 +114,13 @@ function CourseSliderSection({ className = "" }: CourseSliderSectionProps) {
 
   const goToLeft = () => {
     if (viewIndex > 0 && !isLeftDisabled) {
-      setViewIndex(prev => prev - 1);
+      setViewIndex((prev) => prev - 1);
     }
   };
 
   const goToRight = () => {
     if (viewIndex < courseTabs.length - 1 && !isRightDisabled) {
-      setViewIndex(prev => prev + 1);
+      setViewIndex((prev) => prev + 1);
     }
   };
 
